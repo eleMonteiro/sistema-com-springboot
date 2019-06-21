@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/album.css">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link
+	href="https://fonts.googleapis.com/css?family=Poiret+One&display=swap"
+	rel="stylesheet">
+
+<link
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet">
+
+
+<title>Tempero Nordestino</title>
+</head>
+<body>
+	<header>
+		<div class="collapse header-background" id="navbarHeader">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm col-md-7 py-4">
+						<h4 class="collapse-title">About</h4>
+						<p class="text-muted collapse-title">Iniciamos no ano de 2019
+							em Quixadá/CE, restaurante fundado por Elenilson Monteiro. Desde
+							então vem encantando e atraindo clientes nos mais diversos
+							estados do Brasil.</p>
+					</div>
+					<div class="col-sm offset-md-1 py-4">
+						<h4 class="collapse-title">Contatos</h4>
+						<ul class="list-unstyled collapse-title">
+							<li><a href="#" class="text-muted">Twitter</a></li>
+							<li><a href="#" class="text-muted">Facebook</a></li>
+							<li><a href="#" class="text-muted">Instagram</a></li>
+						</ul>
+					</div>
+
+					<div class="col-sm offset-md-1 py-4">
+						<h4 class="collapse-title">Acesso</h4>
+						<ul class="list-unstyled collapse-title">
+							<li><a sec:authorize="hasRole('ROLE_ADMIN')"
+								href="pratos/formulario" class="text-muted">Adicionar Prato</a>
+							</li>
+							<li><a href="/pedido/pedidosUsuario"
+								sec:authorize="hasRole('ROLE_CLIENTE')" class="text-muted">Histórico
+									Pedidos</a></li>
+							<li><a href="/usuarios/formulario"
+								sec:authorize="!isAuthenticated()" class="text-muted">Criar
+									Conta</a></li>
+							<li><a href="/usuarios/login"
+								sec:authorize="!isAuthenticated()" class="text-muted">Login</a></li>
+							<li><a href="/logout" sec:authorize="isAuthenticated()"
+								class="text-muted">Logout</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="navbar navbar-dark header-background ">
+			<div class="container d-flex justify-content-between">
+				<p class="navbar-brand d-flex align-items-center header-title"
+					style="font-size: 40px">Tempero Nordestino</p>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navbarHeader" aria-controls="navbarHeader"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+			</div>
+		</div>
+	</header>
+
+	<main role="main">
+
+	<section class="jumbotron text-center home-text">
+		<div class="container">Considerado o maior e melhor restaurante
+			delivery do Brasil, com especialidade em frutos do mar, o Tempero
+			Nordestino possui um amplo e variado cardápio, com comidas deliciosas
+			diferenciadas, feitas com ingredientes frescos da mais alta
+			qualidade. Os pratos são bem servidos e toda essa excelência é
+			apresentada a preços acessíveis.</div>
+	</section>
+
+	<div class="album py-2 bg-light">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8">
+					<div class="row">
+						<div class="col-md-4" th:each="prato : ${listaPratos}">
+							<div class="card mb-4">
+								<div class="card-body card-prato">
+									<img class="img-thumbnail mx-auto d-block"
+										th:src="@{'/images/pratos/'+${prato.codigo}+.png}" width="300"
+										height="200">
+									<p class="card-text card-prato-text" th:text="${prato.nome}">Nome</p>
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="btn-group">
+
+											<a
+												th:href="'/pedido/adicionar/carrinho/' + ${prato.codigo} + '/1'"
+												sec:authorize="!hasRole('ROLE_ADMIN')"
+												class="btn btn-outline-secondary
+												 card-prato-text btn-add">Add</a>
+
+											<a sec:authorize="hasRole('ROLE_ADMIN')"
+												th:href="@{/pratos/atualizar/{codigo}(codigo = ${prato.codigo})}"
+												class="btn btn-outline-secondary 
+									card-prato-text">Editar</a>
+
+											<a sec:authorize="hasRole('ROLE_ADMIN')"
+												th:href="@{/pratos/excluir/{codigo}(codigo = ${prato.codigo})}"
+												class="btn btn-outline-secondary  
+									card-prato-text">Remover</a>
+										</div>
+
+										<small class="card-prato-text size"
+											sec:authorize="hasRole('ROLE_CLIENTE')"> <input
+											type="number" class="form-control quantidade"
+											placeholder="Qtd" min="1">
+										</small>
+									</div>
+									<div class="mt-3">
+										<small class="card-prato-text">Unit. R$ <span
+											th:text="${prato.preco}" class="precoPrato"></span>
+										</small>
+									</div>
+									<div class="mt-3">
+										<small class="card-prato-text"
+											sec:authorize="hasRole('ROLE_CLIENTE')"> Total: R$ <span
+											class="precoTotal"></span>
+										</small>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-4" sec:authorize="hasRole('ROLE_CLIENTE')">
+					<div class="row">
+						<div class="d-flex col-12 justify-content-center lista-pratos">
+							Lista de Pratos</div>
+						<div class="d-flex col-12 lista-pratos-corpo">
+							<div class="col-12 mh-75 table-overflow">
+								<table class="col-12 table">
+									<thead>
+										<tr>
+											<th scope="col">Nome</th>
+											<th scope="col">Preco</th>
+											<th scope="col">Qtd</th>
+											<th scope="col"></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="item,iterStat : ${listaItems}">
+											<td th:text="${item.prato.nome}"></td>
+											<td th:text="${item.quantidade}"></td>
+											<td
+												th:text="${#numbers.formatDecimal(item.precoTotal, 0, 'COMMA', 2, 'POINT')}"></td>
+											<td><a class="btn btn-danger fa fa-trash"
+												th:href="@{/pedido/remover/carrinho/{codigo}(codigo=${iterStat.index})}">
+
+											</a></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="d-flex col-12 justify-content-center lista-pratos">
+							R$ <span th:text="${total}"></span>
+						</div>
+
+						<div class="col-12 endereco-entrega">
+							<input type="text"class="col-12 form-control endereco" 
+							placeholder="Digite Endereço de Entrega">
+						</div>
+						
+						<div class="col-12 lista-pratos-botao">
+							<a th:if="${not #lists.isEmpty(listaItems)}"
+							 class="col-12 btn confirmar-pedido"
+								href="/pedido/realizarPedido">Confirmar Pedido</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</main>
+
+	<footer class="footer">
+		<div class="container">
+			<p class="float-right">
+				<a href="#" class="text-reset">Back to top</a>
+			</p>
+			<p>Elenilson Monteiro &copy;</p>
+			<p>Tempero Nordestino</p>
+		</div>
+	</footer>
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/js/script.js"></script>
+
+</body>
+</html>
+

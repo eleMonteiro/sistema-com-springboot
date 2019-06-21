@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/album.css">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link
+	href="https://fonts.googleapis.com/css?family=Poiret+One&display=swap"
+	rel="stylesheet">
+
+<title>Tempero Nordestino</title>
+</head>
+<body>
+
+	<header>
+		<div class="collapse header-background" id="navbarHeader">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm col-md-7 py-4">
+						<h4 class="collapse-title">About</h4>
+						<p class="text-muted collapse-title">Iniciamos no ano de 2019
+							em Quixadá/CE, restaurante fundado por Elenilson Monteiro. Desde
+							então vem encantando e atraindo clientes nos mais diversos
+							estados do Brasil.</p>
+					</div>
+					<div class="col-sm offset-md-1 py-4">
+						<h4 class="collapse-title">Contatos</h4>
+						<ul class="list-unstyled collapse-title">
+							<li><a href="#" class="text-muted">Twitter</a></li>
+							<li><a href="#" class="text-muted">Facebook</a></li>
+							<li><a href="#" class="text-muted">Instagram</a></li>
+						</ul>
+					</div>
+
+					<div class="col-sm offset-md-1 py-4">
+						<h4 class="collapse-title">Navegação</h4>
+						<ul class="list-unstyled collapse-title">
+							<li><a href="/" class="text-muted">Home</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="navbar navbar-dark header-background ">
+			<div class="container d-flex justify-content-between">
+				<p class="navbar-brand d-flex align-items-center header-title"
+					style="font-size: 40px">Tempero Nordestino</p>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navbarHeader" aria-controls="navbarHeader"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+			</div>
+		</div>
+	</header>
+
+	<main role="main">
+
+	<div class="container d-flex justify-content-center p-5">
+		<div class="row p-5">
+			<table class="table">
+				<thead class="thead-dark table-pedido">
+					<tr>
+						<th scope="col">ID PEDIDO</th>
+						<th scope="col">DATA PEDIDO</th>
+						<th scope="col">ENDEREÇO</th>
+						<th scope="col">TOTAL PEDIDO</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="pedido : ${pedidos}">
+						<td th:text="${pedido.id}"></td>
+						<td th:text="${pedido.dataPedido}"></td>
+						<td th:text="${pedido.endereco}"></td>
+						<td th:text="'R$ ' + ${pedido.total}"></td>
+						<td><a th:href="@{/itens/pedidos/{codigo}(codigo = ${pedido.id})}"
+							class="btn btn-outline-secondary  
+									card-prato-text">Ver
+								Mais</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="album py-2 bg-light">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="col-md-4" th:each="itens : ${pratosPedido}">
+						<div class="card mb-4">
+							<div class="card-body card-prato">
+								<img class="img-thumbnail mx-auto d-block"
+									th:src="@{'/images/pratos/'+${itens.prato.prato.codigo}+.png}"
+									width="300" height="200">
+								<p class="card-text card-prato-text"
+									th:text="${itens.prato.nome}">Nome</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</main>
+
+	<footer class="footer">
+		<div class="container">
+			<p class="float-right">
+				<a href="#" class="text-reset">Back to top</a>
+			</p>
+			<p>Elenilson Monteiro &copy;</p>
+			<p>Tempero Nordestino</p>
+		</div>
+	</footer>
+
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+
