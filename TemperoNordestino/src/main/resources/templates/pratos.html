@@ -126,7 +126,7 @@
 									</div>
 									<div class="mt-3">
 										<small class="card-prato-text">Unit. R$ <span
-											th:text="${prato.preco}" class="precoPrato"></span>
+											th:text="${#numbers.formatDecimal(prato.preco, 0, 'COMMA', 2, 'POINT')}" class="precoPrato"></span>
 										</small>
 									</div>
 									<div class="mt-3">

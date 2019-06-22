@@ -18,6 +18,22 @@ public class UsuarioService {
 	private UsuarioRepository repository;
 	
 	public String salvarUsuario(Usuario usuario) {	
+		
+		if (!usuario.getNome().matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ'\\\\\\\\\\\\\\\\s]+([ ][A-ZA-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ'\\\\\\\\\\\\\\\\s]+)*$"))
+			return "Nome Inválido.";
+		
+		if(!usuario.getCpf().matches("[0-9]{11}"))
+			return "CPF Inválido.";
+		
+		if(usuario.getEndereco().equals("") || usuario.getEndereco().matches("[0-9]"))
+			return "Endereço Inválida.";
+		
+		if(!usuario.getEmail().matches("^[a-zA-Z]+[0-9.]*@[a-zA-Z]+.[a-zA-Z]+.([a-zA-Z]+)?$"))
+			return "Email Inválido.";
+		
+		if(!usuario.getSenha().matches("[A-Za-z0-9]+$"))
+			return "Senha Inválida.";
+		
 		usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getPassword()));
 		
 		Papel papel = new Papel();
@@ -37,7 +53,7 @@ public class UsuarioService {
 		Usuario usuario = this.buscarUsuarioPorId(codigo);
 
 		if (usuario == null)
-			return "Não Foi Possivel Remover o Usuario.";
+			return "Usuario não encontrado.";
 
 		repository.deleteById(codigo);
 

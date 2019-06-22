@@ -18,16 +18,16 @@ public class PratoService {
 
 	public String salvarPrato(Prato prato, MultipartFile imagem) {
 
-		if (!prato.getNome().matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ'\\\\s]+$"))
+		if (!prato.getNome().matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ'\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\s]+([ ][A-ZA-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ'\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\s]+)*$"))
 			return "Nome do Prato Inválido.";
 
 		if (prato.getPreco() <= 0)
 			return "Preço do Prato Inválido.";
 
-		if (prato.getDescricao().equals(""))
+		if (!prato.getDescricao().matches("^[A-Za-z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ'\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\s]+([ ][A-ZA-Za-z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ'\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\s]+)*$"))
 			return "Descrição do Prato Inválido.";
 
-		if (imagem == null)
+		if (imagem.getSize() <= 0)
 			return "Prato Precisa de Uma Imagem.";
 
 		repository.save(prato);

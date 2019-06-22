@@ -28,7 +28,7 @@ public class PratoController {
 		ModelAndView mv = new ModelAndView("addPrato");
 
 		mv.addObject(new Prato());
-		mv.addObject("msg", "O campo preço precisa ser diferente de 0");
+		mv.addObject("msg", null);
 		mv.addObject("tipo", "Cadastrar");
 		return mv;
 	}
@@ -40,13 +40,20 @@ public class PratoController {
 		ModelAndView mv = new ModelAndView("addPrato");;
 
 		if (result.hasErrors()) {
+			mv.addObject("tipo", "Cadastrar");
 			return mv;
 		}
 
 		
+		String msg = service.salvarPrato(prato, imagem);
+		
+		if(msg != "Prato Cadastrado.") {
+			mv.addObject("msg", msg);
+			mv.addObject("tipo", "Cadastrar");
+			return mv;
+		}
+		
 		mv = new ModelAndView("redirect:/");
-		service.salvarPrato(prato, imagem);
-
 		List<Prato> pratos = service.listarPratos();
 		mv.addObject("listaPratos", pratos);
 		
@@ -73,5 +80,4 @@ public class PratoController {
 
 		return mv;
 	}
-
 }

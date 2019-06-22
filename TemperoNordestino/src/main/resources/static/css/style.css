@@ -1,7 +1,8 @@
 @charset "UTF-8";
 
 .header-title {
-	color: white; font-family : 'Poiret One', cursive;
+	color: white;
+	font-family: 'Poiret One', cursive;
 	font-weight: bold;
 	font-family: 'Poiret One', cursive;
 }
@@ -26,6 +27,7 @@
 
 .card-prato {
 	background-color: #22313f;
+	box-shadow: 9px 7px 5px #22313f;
 }
 
 .card-prato-text {
@@ -35,53 +37,53 @@
 	font-size: 20px;
 }
 
-.form-prato{
+.form-prato {
 	color: #2e3131;
 	font-family: 'Poiret One', cursive;
 	font-weight: bold;
 	font-size: 20px;
 }
 
-.form-prato input{
+.form-prato input {
 	color: #2e3131;
 	font-family: 'Poiret One', cursive;
 	font-weight: bold;
 	font-size: 15px;
 }
 
-.form-usuario{
+.form-usuario {
 	color: #2e3131;
 	font-family: 'Poiret One', cursive;
 	font-weight: bold;
 	font-size: 20px;
 }
 
-.form-usuario input{
+.form-usuario input {
 	color: #2e3131;
 	font-family: 'Poiret One', cursive;
 	font-weight: bold;
 	font-size: 15px;
 }
 
-.form-login{
+.form-login {
 	color: #2e3131;
 	font-family: 'Poiret One', cursive;
 	font-weight: bold;
 	font-size: 20px;
 }
 
-.form-login input{
+.form-login input {
 	color: #2e3131;
 	font-family: 'Poiret One', cursive;
 	font-weight: bold;
 	font-size: 15px;
 }
 
-.size{
+.size {
 	width: 70px;
 }
 
-.lista-pratos{
+.lista-pratos {
 	background-color: #2e3131;
 	color: white;
 	font-family: 'Poiret One', cursive;
@@ -89,7 +91,7 @@
 	font-size: 20px;
 }
 
-.lista-pratos-corpo{
+.lista-pratos-corpo {
 	background-color: white;
 	color: #2e3131;
 	font-family: 'Poiret One', cursive;
@@ -99,7 +101,7 @@
 	width: auto;
 }
 
-.lista-pratos-corpo table{
+.lista-pratos-corpo table {
 	background-color: white;
 	color: #2e3131;
 	font-family: 'Poiret One', cursive;
@@ -109,16 +111,15 @@
 	width: auto;
 }
 
-.lista-pratos-botao{
+.lista-pratos-botao {
 	background-color: #28a745;
-	
 }
 
-.lista-pratos-botao:hover{
+.lista-pratos-botao:hover {
 	background-color: #28a735;
 }
 
-.lista-pratos-botao a{
+.lista-pratos-botao a {
 	color: white;
 	font-family: 'Poiret One', cursive;
 	font-weight: bold;
@@ -126,7 +127,7 @@
 	text-decoration: none;
 }
 
-.lista-pratos-botao a:hover{
+.lista-pratos-botao a:hover {
 	color: white;
 	font-family: 'Poiret One', cursive;
 	font-weight: bold;
@@ -134,28 +135,29 @@
 	text-decoration: none;
 }
 
-.table-overflow{
+.table-overflow {
 	max-height: 400px;
-	overflow-y: auto; 
+	overflow-y: auto;
 }
 
-.table-pedido{
+.table-pedido {
 	color: #2e3131;
 	font-family: 'Poiret One', cursive;
 	font-weight: bold;
 	font-size: 20px;
 }
 
-.endereco-entrega input{
+.endereco-entrega input {
 	color: #2e3131;
 	font-family: 'Poiret One', cursive;
 	font-weight: bold;
 	font-size: 20px;
 }
 
-.footer{
+.footer {
 	text-decoration: none;
-	color: white; font-family : 'Poiret One', cursive;
+	color: white;
+	font-family: 'Poiret One', cursive;
 	font-weight: bold;
 	font-family: 'Poiret One', cursive;
 	font-size: 20px;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -60,7 +60,19 @@
 	<main role="main">
 
 	<div class="container p-5">
-		<form class="form-usuario" action="/usuarios/cadastrar" method="POST">
+		<form class="form-usuario" action="/usuarios/cadastrar" method="POST" th:object="${usuario}">
+			
+			<div class="alert alert-danger" role="alert"
+				th:if="${#fields.hasAnyErrors()}">
+				<div th:each="detailedError : ${#fields.detailedErrors()}">
+					<span th:text="${detailedError.message}"></span>
+				</div>
+			</div>
+
+			<div class="alert alert-danger" th:if="${not #strings.isEmpty(msg)}"
+				role="alert">
+				<span th:text="${msg}"></span>
+			</div>
 
 			<div class="form-row justify-content-center">
 				<div class="form-group">CADASTRO USUÀRIO</div>
@@ -69,11 +81,13 @@
 			<div class="form-row">
 				<div class="form-group col-md-2">
 					<label for="inputCPF">CPF</label> <input type="text"
-						class="form-control" id="inputCPF" placeholder="CPF" name="cpf">
+						class="form-control" id="inputCPF" placeholder="11122233344"
+						name="cpf">
 				</div>
 				<div class="form-group col-md-8">
 					<label for="inputNome">Nome</label> <input type="text"
-						class="form-control" id="inputNome" placeholder="Nome" name="nome">
+						class="form-control" id="inputNome" placeholder="Francisco"
+						name="nome">
 				</div>
 				<div class="form-group col-md-2">
 					<label for="inputDNasc">Data Nascimento</label> <input type="text"
@@ -81,20 +95,20 @@
 						name="dataNascimento">
 				</div>
 			</div>
-			
+
 			<div class="form-row">
 				<div class="form-group col-md-6">
 					<label for="inputEmail">Email</label> <input type="email"
-						class="form-control" id="inputEmail" placeholder="Email"
-						name="email">
+						class="form-control" id="inputEmail"
+						placeholder="example@gmail.com" name="email">
 				</div>
 				<div class="form-group col-md-6">
 					<label for="inputPassword">Password</label> <input type="password"
-						class="form-control" id="inputPassword" placeholder="Senha"
-						name="senha">
+						class="form-control" id="inputPassword"
+						placeholder="Apenas Letras e Números" name="senha">
 				</div>
 			</div>
-			
+
 			<div class="form-group col-md-6">
 				<label for="inputAddress">Endereço</label> <input type="text"
 					class="form-control" id="inputAddress"

@@ -27,18 +27,28 @@ public class UsuarioController {
 
 	@RequestMapping("/cadastrar")
 	public ModelAndView addUsuario(@Validated Usuario usuario, BindingResult result) {
-		ModelAndView mv = new ModelAndView("addUsuario");
+		try {
+			ModelAndView mv = new ModelAndView("addUsuario");
 
-		if (result.hasErrors()) {
+			if (result.hasErrors()) {
+				return mv;
+			}
+
+			String msg = service.salvarUsuario(usuario);
+
+			if (msg != "Usuario Cadastrado.") {
+				mv.addObject("msg", msg);
+				return mv;
+			}
+
+			mv = new ModelAndView("redirect:/");
+			mv.addObject("message", "Usuario Cadastrado.");
 			return mv;
+
+		} catch (IllegalArgumentException e) {
+
 		}
-
-		mv = new ModelAndView("redirect:/");
-
-		service.salvarUsuario(usuario);
-
-		mv.addObject("message", "Usuario Cadastrado.");
-		return mv;
+		return null;
 	}
 
 	@RequestMapping("/delete/{codigo}")
