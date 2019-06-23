@@ -154,6 +154,17 @@
 	font-size: 20px;
 }
 
+.itens-pedido{
+	color: white;
+	font-family: 'Poiret One', cursive;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.itens-pedido h1{
+	background-color: #343A40;
+}
+
 .footer {
 	text-decoration: none;
 	color: white;

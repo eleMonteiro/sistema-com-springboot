@@ -77,12 +77,17 @@ public class PedidoController {
 		UserDetails user = (UserDetails) auth;
 		Usuario usuario = usuarioService.buscaPorLogin(user.getUsername());
 
+		System.out.println(endereco);
 		Pedido pedido = new Pedido();
 		pedido.setUsuario(usuario);
 		pedido.setItems(carrinho.getItens());
 		pedido.setTotal(carrinho.getTotal());
 		pedido.setDataPedido(new Date());
-		pedido.setEndereco(endereco);
+		
+		if( endereco.equals("null"))
+			pedido.setEndereco(usuario.getEndereco());
+		else
+			pedido.setEndereco(endereco);
 
 		ModelAndView mv = new ModelAndView("redirect:/");
 

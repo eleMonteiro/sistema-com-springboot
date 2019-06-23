@@ -1,6 +1,10 @@
 package com.ufc.br.controller;
 
+import javax.persistence.PersistenceException;
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -27,9 +31,10 @@ public class UsuarioController {
 
 	@RequestMapping("/cadastrar")
 	public ModelAndView addUsuario(@Validated Usuario usuario, BindingResult result) {
+		ModelAndView mv = new ModelAndView("addUsuario");
+		
 		try {
-			ModelAndView mv = new ModelAndView("addUsuario");
-
+			
 			if (result.hasErrors()) {
 				return mv;
 			}
@@ -46,9 +51,18 @@ public class UsuarioController {
 			return mv;
 
 		} catch (IllegalArgumentException e) {
-
+			mv.addObject("msg", "Não foi possível criar conta.");
+			return mv;
+		} catch (PersistenceException e) {
+			mv.addObject("msg", "Não foi possível criar conta.");
+			return mv;
+		} catch (ConstraintViolationException e) {
+			mv.addObject("msg", "Não foi possível criar conta.");
+			return mv;
+		} catch (DataIntegrityViolationException e) {
+			mv.addObject("msg", "Não foi possível criar conta.");
+			return mv;
 		}
-		return null;
 	}
 
 	@RequestMapping("/delete/{codigo}")

@@ -18,6 +18,7 @@ $('.endereco').change(function() {
 	var preco = $(this).parent().parent().parent().find('.endereco').val();
 	
 	var href = $(this).parent().parent().find('.confirmar-pedido').attr('href');
+	href = ('href', href.substring(0, href.lastIndexOf("/")));
 	href += "/"+preco;
 	$(this).parent().parent().find('.confirmar-pedido').attr('href', href);
 

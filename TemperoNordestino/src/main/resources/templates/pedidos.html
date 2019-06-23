@@ -11,7 +11,9 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Poiret+One&display=swap"
 	rel="stylesheet">
-
+<link
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet">
 <title>Tempero Nordestino</title>
 </head>
 <body>
@@ -60,52 +62,76 @@
 	</header>
 
 	<main role="main">
-
 	<div class="container d-flex justify-content-center p-5">
 		<div class="row p-5">
-			<table class="table">
-				<thead class="thead-dark table-pedido">
-					<tr>
-						<th scope="col">ID PEDIDO</th>
-						<th scope="col">DATA PEDIDO</th>
-						<th scope="col">ENDEREÇO</th>
-						<th scope="col">TOTAL PEDIDO</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="pedido : ${pedidos}">
-						<td th:text="${pedido.id}"></td>
-						<td th:text="${pedido.dataPedido}"></td>
-						<td th:text="${pedido.endereco}"></td>
-						<td th:text="'R$ ' + ${pedido.total}"></td>
-						<td><a th:href="@{/itens/pedidos/{codigo}(codigo = ${pedido.id})}"
-							class="btn btn-outline-secondary  
-									card-prato-text">Ver
-								Mais</a></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	<div class="album py-2 bg-light">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="col-md-4" th:each="itens : ${pratosPedido}">
-						<div class="card mb-4">
-							<div class="card-body card-prato">
-								<img class="img-thumbnail mx-auto d-block"
-									th:src="@{'/images/pratos/'+${itens.prato.prato.codigo}+.png}"
-									width="300" height="200">
-								<p class="card-text card-prato-text"
-									th:text="${itens.prato.nome}">Nome</p>
+			<div th:each="pedido : ${pedidos}">
+				<div class="modal fade" th:id="'modal'+${pedido.id}" tabindex="-1"
+					role="dialog" aria-labelledby="classInfo" aria-hidden="true">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content text-center itens-pedido">
+							<h1>Itens do Pedido</h1>
+							<!--Content-->
+							<div class="modal-content">
+								<!--Body-->
+								<div style="max-height: 600px; overflow-y: scroll;"
+									class="modal-body p-3">
+									<div class="row">
+										<div class="col-3" th:each="itens : ${pedido.items}">
+											<div class="card mb-4">
+												<div class="card-body card-prato">
+													<img class="img-thumbnail mx-auto d-block"
+														th:src="@{'/images/pratos/'+*{itens.prato.codigo}+.png}"
+														width="300" height="200">
+													<p class="card-text card-prato-text"
+														th:text="*{itens.prato.nome}">Nome</p>
+													<p class="card-text card-prato-text"
+														th:text="'QTD. '+ *{itens.quantidade}">Quantidade</p>
+													<p class="card-text card-prato-text"
+														th:text="'R$ ' + ${#numbers.formatDecimal(itens.precoTotal, 0, 'COMMA', 2, 'POINT')}">Preço</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!--Footer-->
+							<div class="modal-footer">
+								<a data-dismiss="modal" style="color: white;"
+									class="btn btn-secondary btn-rounded">Fechar</a>
 							</div>
 						</div>
+						<!--/.Content-->
 					</div>
 				</div>
 			</div>
 		</div>
+		<table class="table">
+			<thead class="thead-dark table-pedido">
+				<tr>
+					<th scope="col">ID PEDIDO</th>
+					<th scope="col">DATA PEDIDO</th>
+					<th scope="col">ENDEREÇO</th>
+					<th scope="col">TOTAL PEDIDO</th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="pedido : ${pedidos}">
+					<td th:text="${pedido.id}"></td>
+					<td th:text="${pedido.dataPedido}"></td>
+					<td th:text="${pedido.endereco}"></td>
+					<td
+						th:text="'R$' + ${#numbers.formatDecimal(pedido.total, 0, 'COMMA', 2, 'POINT')}"></td>
+					<td><a data-toggle="modal"
+						th:attr="data-target='#modal'+${pedido.id}"
+						class="btn btn-outline-secondary  
+									card-prato-text">Ver
+							Mais</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 	</div>
 	</main>
 

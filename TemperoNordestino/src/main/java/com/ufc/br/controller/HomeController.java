@@ -19,6 +19,7 @@ public class HomeController {
 		ModelAndView mv = new ModelAndView("pratos");
 		
 		mv.addObject("listaPratos", service.listarPratos()); 
+		mv.addObject("endereco", "null");
 		return mv;
     }
 }

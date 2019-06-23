@@ -17,7 +17,6 @@
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
 	rel="stylesheet">
 
-
 <title>Tempero Nordestino</title>
 </head>
 <body>
@@ -178,13 +177,13 @@
 
 						<div class="col-12 endereco-entrega">
 							<input type="text"class="col-12 form-control endereco" 
-							placeholder="Digite Endereço de Entrega">
+							placeholder="Digite Endereço de Entrega" name="end">
 						</div>
 						
 						<div class="col-12 lista-pratos-botao">
 							<a th:if="${not #lists.isEmpty(listaItems)}"
 							 class="col-12 btn confirmar-pedido"
-								href="/pedido/realizarPedido">Confirmar Pedido</a>
+								th:href="'/pedido/realizarPedido/'+${endereco}">Confirmar Pedido</a>
 						</div>
 					</div>
 				</div>
