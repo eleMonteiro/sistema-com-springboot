@@ -1,8 +1,5 @@
 package com.ufc.br.controller;
 
-import javax.persistence.PersistenceException;
-import javax.validation.ConstraintViolationException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -49,15 +46,6 @@ public class UsuarioController {
 			mv = new ModelAndView("redirect:/");
 			return mv;
 
-		} catch (IllegalArgumentException e) {
-			mv.addObject("msg", "Não foi possível criar conta.");
-			return mv;
-		} catch (PersistenceException e) {
-			mv.addObject("msg", "Não foi possível criar conta.");
-			return mv;
-		} catch (ConstraintViolationException e) {
-			mv.addObject("msg", "Não foi possível criar conta.");
-			return mv;
 		} catch (DataIntegrityViolationException e) {
 			mv.addObject("msg", "Não foi possível criar conta.");
 			return mv;
