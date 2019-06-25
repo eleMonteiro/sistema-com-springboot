@@ -75,23 +75,24 @@
 								<!--Body-->
 								<div style="max-height: 600px; overflow-y: scroll;"
 									class="modal-body p-3">
-									<div class="row">
-										<div class="col-3" th:each="itens : ${pedido.items}">
-											<div class="card mb-4">
-												<div class="card-body card-prato">
-													<img class="img-thumbnail mx-auto d-block"
-														th:src="@{'/images/pratos/'+*{itens.prato.codigo}+.png}"
-														width="300" height="200">
-													<p class="card-text card-prato-text"
-														th:text="*{itens.prato.nome}">Nome</p>
-													<p class="card-text card-prato-text"
-														th:text="'QTD. '+ *{itens.quantidade}">Quantidade</p>
-													<p class="card-text card-prato-text"
-														th:text="'R$ ' + ${#numbers.formatDecimal(itens.precoTotal, 0, 'COMMA', 2, 'POINT')}">Preço</p>
-												</div>
-											</div>
-										</div>
-									</div>
+									<table class="table">
+										<thead class="thead-dark table-pedido">
+											<tr>
+												<th scope="col">NOME</th>
+												<th scope="col">QUANTIDADE</th>
+												<th scope="col">TOTAL PREÇO</th>
+												<th scope="col"></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="itens : ${pedido.items}">
+												<td th:text="*{itens.prato.nome}">Nome</td>
+												<td th:text="*{itens.quantidade}">Quantidade</td>
+												<td
+													th:text="'R$ ' + ${#numbers.formatDecimal(itens.precoTotal, 0, 'COMMA', 2, 'POINT')}">Preço</td>
+											</tr>
+										</tbody>
+									</table>
 								</div>
 							</div>
 
@@ -131,7 +132,6 @@
 				</tr>
 			</tbody>
 		</table>
-	</div>
 	</div>
 	</main>
 

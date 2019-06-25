@@ -47,7 +47,6 @@ public class UsuarioController {
 			}
 
 			mv = new ModelAndView("redirect:/");
-			mv.addObject("message", "Usuario Cadastrado.");
 			return mv;
 
 		} catch (IllegalArgumentException e) {

@@ -2,7 +2,11 @@ package com.ufc.br.controller;
 
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,7 +27,7 @@ public class PratoController {
 
 	@Autowired
 	private PratoService service;
-		
+
 	@RequestMapping("/formulario")
 	public ModelAndView formulario() {
 		ModelAndView mv = new ModelAndView("addPrato");
@@ -37,27 +42,43 @@ public class PratoController {
 	public ModelAndView cadastrar(@Validated Prato prato, BindingResult result,
 			@RequestParam(value = "imagem") MultipartFile imagem) {
 
-		ModelAndView mv = new ModelAndView("addPrato");;
+		ModelAndView mv = new ModelAndView("addPrato");
 
-		if (result.hasErrors()) {
-			mv.addObject("tipo", "Cadastrar");
+		try {
+			if (result.hasErrors()) {
+				mv.addObject("tipo", "Cadastrar");
+				return mv;
+			}
+
+			String msg = service.salvarPrato(prato, imagem);
+
+			if (msg != "Prato Cadastrado.") {
+				mv.addObject("msg", msg);
+				mv.addObject("tipo", "Cadastrar");
+				return mv;
+			}
+
+			mv = new ModelAndView("redirect:/");
+			List<Prato> pratos = service.listarPratos();
+			mv.addObject("listaPratos", pratos);
+
+			return mv;
+		} catch (MultipartException e) {
+			mv.addObject("msg", "Imagem incorreta.");
+			return mv;
+		} catch (IllegalArgumentException e) {
+			mv.addObject("msg", "Não foi possível adicionar prato.");
+			return mv;
+		} catch (PersistenceException e) {
+			mv.addObject("msg", "Não foi possível adicionar prato.");
+			return mv;
+		} catch (ConstraintViolationException e) {
+			mv.addObject("msg", "Não foi possível adicionar prato.");
+			return mv;
+		} catch (DataIntegrityViolationException e) {
+			mv.addObject("msg", "Não foi possível adicionar prato.");
 			return mv;
 		}
-
-		
-		String msg = service.salvarPrato(prato, imagem);
-		
-		if(msg != "Prato Cadastrado.") {
-			mv.addObject("msg", msg);
-			mv.addObject("tipo", "Cadastrar");
-			return mv;
-		}
-		
-		mv = new ModelAndView("redirect:/");
-		List<Prato> pratos = service.listarPratos();
-		mv.addObject("listaPratos", pratos);
-		
-		return mv;
 	}
 
 	@RequestMapping("excluir/{codigo}")
@@ -70,7 +91,7 @@ public class PratoController {
 
 	@RequestMapping("atualizar/{codigo}")
 	public ModelAndView atualizar(@PathVariable Long codigo) {
-	
+
 		Prato prato = service.buscarPratoPorId(codigo);
 
 		ModelAndView mv = new ModelAndView("addPrato");

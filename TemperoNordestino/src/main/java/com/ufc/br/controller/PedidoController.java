@@ -27,7 +27,8 @@ import com.ufc.br.service.UsuarioService;
 @RequestMapping("/pedido")
 public class PedidoController {
 
-	private ItemCarrinho carrinho = new ItemCarrinho();
+	@Autowired
+	private ItemCarrinho carrinho;
 
 	@Autowired
 	private UsuarioService usuarioService;
@@ -77,7 +78,6 @@ public class PedidoController {
 		UserDetails user = (UserDetails) auth;
 		Usuario usuario = usuarioService.buscaPorLogin(user.getUsername());
 
-		System.out.println(endereco);
 		Pedido pedido = new Pedido();
 		pedido.setUsuario(usuario);
 		pedido.setItems(carrinho.getItens());
@@ -119,5 +119,4 @@ public class PedidoController {
 		mv.addObject("pedidos", pedidos);
 		return mv;
 	}
-
 }

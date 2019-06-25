@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.ufc.br.security.UsuarioSecurity;
+import com.ufc.br.util.LogoutUtil;
 
 @Configuration
 @EnableWebSecurity
@@ -18,6 +19,9 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UsuarioSecurity security;
 
+	@Autowired
+	private LogoutUtil logoutUtil;
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests()
@@ -42,7 +46,7 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 		.and().formLogin().loginPage("/usuarios/login").permitAll().defaultSuccessUrl("/")
 		
 		.and()
-		.logout().logoutSuccessUrl("/usuarios/login?logout").permitAll();
+		.logout().logoutSuccessHandler(logoutUtil);
 	}
 
 	@Override
